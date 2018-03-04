@@ -1,0 +1,21 @@
+(defun fibo(n)
+  (cond ((= n 0)
+         0)
+        ((= n 1)1)
+        ((and (/= n 0) (/= n 1))
+         (+ (fibo (- n 2)) (fibo (- n 1))))))
+
+(defun tailcall_fibo(n &optional (left 0) (right 1) (result 0) (count 1))
+  (cond ((= n 0)
+         0)
+        ((= n 1)
+         1)
+        ((= n count)
+         result)
+        ((/= n 0)
+         (tailcall_fibo n right (+ left right) (+ left right) (+ count 1)))))
+
+(defun main()
+  (format t "~D~%" (tailcall_fibo 100000)))
+
+(main)
