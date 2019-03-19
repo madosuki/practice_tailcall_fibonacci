@@ -3,5 +3,5 @@
 通常の再帰関数版も書いてあるので違いが試せます。
 
 ```
-sbcl --script fibonacci.lisp
+sbcl --script test.lisp
 ```
