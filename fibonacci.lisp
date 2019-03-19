@@ -1,21 +1,25 @@
-(defun fibo(n)
+(defun fibo (n)
   (cond ((= n 0)
          0)
-        ((= n 1)1)
+        ((= n 1)
+         1)
         ((and (/= n 0) (/= n 1))
          (+ (fibo (- n 2)) (fibo (- n 1))))))
 
-(defun tailcall_fibo(n &optional (left 0) (right 1) (result 0) (count 1))
+(defun tailcall-fibo (n &optional (left 0) (right 1) (count 1) (isSign nil))
   (cond ((= n 0)
          0)
         ((= n 1)
          1)
         ((= n count)
-         result)
-        ((/= n 0)
-         (tailcall_fibo n right (+ left right) (+ left right) (+ count 1)))))
-
-(defun main()
-  (format t "~D~%" (tailcall_fibo 100000)))
-
-(main)
+         (if isSign
+             (- 0 right)
+             right))
+        ((let ((tmp-count (+ count 1))
+               (tmp (+ left right)))
+           (if (< n 0)
+               (tailcall-fibo (abs n) right tmp tmp-count t)
+               (progn
+                 (if isSign
+                     (tailcall-fibo n right tmp tmp-count t)
+                     (tailcall-fibo n right tmp tmp-count nil))))))))
